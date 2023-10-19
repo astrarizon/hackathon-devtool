@@ -12,14 +12,9 @@ import { QueueWorkerModule } from './workers/queue.worker.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { SocketAdapter } from './websockets/socket.adapter';
 import cookieParser from 'cookie-parser';
-import { CacheWarmerModule } from './crons/cache.warmer/cache.warmer.module';
 import { TransactionProcessorModule } from './crons/transaction.processor/transaction.processor.module';
 import { PubSubListenerModule } from './common/pubsub/pub.sub.listener.module';
-import { SdkNestjsConfigServiceImpl } from './common/api-config/sdk.nestjs.config.service.impl';
-import { LoggingInterceptor, MetricsService } from '@multiversx/sdk-nestjs-monitoring';
-import { NativeAuthGuard } from '@multiversx/sdk-nestjs-auth';
 import { LoggerInitializer } from '@multiversx/sdk-nestjs-common';
-import { CacheService, CachingInterceptor } from '@multiversx/sdk-nestjs-cache';
 
 import '@multiversx/sdk-nestjs-common/lib/utils/extensions/array.extensions';
 import '@multiversx/sdk-nestjs-common/lib/utils/extensions/date.extensions';
@@ -34,30 +29,27 @@ async function bootstrap() {
   publicApp.use(cookieParser());
 
   const apiConfigService = publicApp.get<ApiConfigService>(ApiConfigService);
-  const cachingService = publicApp.get<CacheService>(CacheService);
-  const metricsService = publicApp.get<MetricsService>(MetricsService);
   const httpAdapterHostService = publicApp.get<HttpAdapterHost>(HttpAdapterHost);
 
-  if (apiConfigService.getIsAuthActive()) {
-    publicApp.useGlobalGuards(new NativeAuthGuard(new SdkNestjsConfigServiceImpl(apiConfigService), cachingService));
-  }
+  // if (apiConfigService.getIsAuthActive()) {
+  //   publicApp.useGlobalGuards(new NativeAuthGuard(new SdkNestjsConfigServiceImpl(apiConfigService), cachingService));
+  // }
 
   const httpServer = httpAdapterHostService.httpAdapter.getHttpServer();
   httpServer.keepAliveTimeout = apiConfigService.getServerTimeout();
   httpServer.headersTimeout = apiConfigService.getHeadersTimeout(); //`keepAliveTimeout + server's expected response time`
 
   const globalInterceptors: NestInterceptor[] = [];
-  globalInterceptors.push(new LoggingInterceptor(metricsService));
 
-  if (apiConfigService.getUseCachingInterceptor()) {
-    const cachingInterceptor = new CachingInterceptor(
-      cachingService,
-      httpAdapterHostService,
-      metricsService,
-    );
+  // if (apiConfigService.getUseCachingInterceptor()) {
+  //   const cachingInterceptor = new CachingInterceptor(
+  //     cachingService,
+  //     httpAdapterHostService,
+  //     metricsService,
+  //   );
 
-    globalInterceptors.push(cachingInterceptor);
-  }
+  //   globalInterceptors.push(cachingInterceptor);
+  // }
 
   publicApp.useGlobalInterceptors(...globalInterceptors);
 
@@ -86,11 +78,6 @@ async function bootstrap() {
   if (apiConfigService.getIsPrivateApiFeatureActive()) {
     const privateApp = await NestFactory.create(PrivateAppModule);
     await privateApp.listen(apiConfigService.getPrivateApiFeaturePort());
-  }
-
-  if (apiConfigService.getIsCacheWarmerFeatureActive()) {
-    const cacheWarmerApp = await NestFactory.create(CacheWarmerModule);
-    await cacheWarmerApp.listen(apiConfigService.getCacheWarmerFeaturePort());
   }
 
   if (apiConfigService.getIsTransactionProcessorFeatureActive()) {

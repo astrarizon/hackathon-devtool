@@ -49,67 +49,6 @@ export class ApiConfigService {
     return 6379;
   }
 
-  getDatabaseHost(): string {
-    const databaseHost = this.configService.get<string>('database.host');
-    if (!databaseHost) {
-      throw new Error('No database.host present');
-    }
-
-    return databaseHost;
-  }
-
-  getDatabasePort(): number {
-    const databasePort = this.configService.get<number>('database.port');
-    if (!databasePort) {
-      throw new Error('No database.port present');
-    }
-
-    return databasePort;
-  }
-
-
-  getDatabaseUsername(): string {
-    const databaseUsername = this.configService.get<string>('database.username');
-    if (!databaseUsername) {
-      throw new Error('No database.username present');
-    }
-
-    return databaseUsername;
-  }
-
-  getDatabasePassword(): string {
-    const databasePassword = this.configService.get<string>('database.password');
-    if (!databasePassword) {
-      throw new Error('No database.password present');
-    }
-
-    return databasePassword;
-  }
-
-  getDatabaseName(): string {
-    const databaseName = this.configService.get<string>('database.name');
-    if (!databaseName) {
-      throw new Error('No database.name present');
-    }
-
-    return databaseName;
-  }
-
-  getDatabaseConnection(): { host: string, port: number, username: string, password: string, database: string } {
-    return {
-      host: this.getDatabaseHost(),
-      port: this.getDatabasePort(),
-      username: this.getDatabaseUsername(),
-      password: this.getDatabasePassword(),
-      database: this.getDatabaseName(),
-    };
-  }
-
-
-  getNoSQLDatabaseConnection(): string {
-    return `mongodb://${this.getDatabaseHost()}:27017/${this.getDatabaseName()}`;
-  }
-
   getIsPublicApiFeatureActive(): boolean {
     const isApiActive = this.configService.get<boolean>('features.publicApi.enabled');
     if (isApiActive === undefined) {
@@ -273,5 +212,9 @@ export class ApiConfigService {
 
   getNativeAuthAcceptedOrigins(): string[] {
     return this.configService.get<string[]>('nativeAuth.acceptedOrigins') ?? [];
+  }
+
+  getChatGptApiKey(): string {
+    return this.configService.get<string>('chatGpt.apiKey') ?? '';
   }
 }
