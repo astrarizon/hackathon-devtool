@@ -1,0 +1,34 @@
+/* src/styles/FileUploadForm.css */
+
+.file-upload-container {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    
+}
+
+.file-upload-label {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.file-input {
+    display: none;
+}
+
+
+.upload-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}

@@ -1,0 +1,8 @@
+.codev-page-container {
+    /* Adjust the gradient colors and direction as per your preference */
+    background: linear-gradient(to bottom, #090C08, #2c2c2c,    #525151);
+    min-height: 100vh; /* Ensure it covers the full viewport height */
+  }
+  
+
+  
