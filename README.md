@@ -48,11 +48,14 @@ node run start
 ![alt text](https://github.com/astrarizon/hackathon-devtool/blob/main/screencapture-localhost-3000-2023-10-20-12_18_27.png)
 #### Pulsar CoDev
 
-###### Summary Example (Invoice Contract)
+###### Summary Example [Invoice Contract](https://github.com/user/repo/blob/branch/other_file.md)
 "This smart contract is developed for the MultiversX blockchain and is used for managing invoices. The contract allows users to add invoices and pay them using either EGLD or ESDT tokens.\n\nThe contract has the following functionality. Initialization: The `init` function is called during contract deployment and sets the initial fee and invoice ID. Adding an Invoice: The `add_invoice` function allows users to add a new invoice. It takes the creator's address, token identifier, nonce, and amount as parameters. The function creates a new `Invoice` struct with the provided details and stores it in the contract's storage. It also increments the invoice ID and returns the new invoice ID. Paying an Invoice: The `pay_invoice` function is used to pay an existing invoice. It takes the invoice ID, payment token, payment nonce, and payment amount as parameters. The function retrieves the invoice details from the storage using the invoice ID. It then verifies that the payment token, nonce, and amount match the invoice details. If the verification is successful, the function calculates the tax amount based on the fee set in the contract. If the tax amount is greater than zero, it transfers the tax amount to the contract owner's address using the payment token. Finally, it transfers the remaining amount (invoice amount minus tax) to the invoice creator's address using the payment token. The invoice is then cleared from the storage. Pay EGLD or ESDT: The `pay_egld_esdt` function is a helper function used to transfer EGLD or ESDT tokens to a specified receiver address. It takes the payment token, payment nonce, receiver address, and amount as parameters. If the amount is zero, the function returns early. If the payment token is EGLD, it uses the `send().direct_egld` function to transfer the amount directly to the receiver address. Otherwise, it uses the `send().direct_esdt` function to transfer the amount of the specified ESDT token to the receiver address.\n\n5. Get Fee: The `getFee` function is a view function that returns the current fee value. Get Invoice ID: The `getInvoiceId` function is a view function that returns the current invoice ID. Get Invoice: The `getInvoice` function is a view function that takes an invoice ID as a parameter and returns the corresponding invoice details.\n\nThe typical execution flow would be as follows. The contract is deployed, and the `init` function is called to set the initial fee and invoice ID. Users can call the `add_invoice` function to add a new invoice, providing the necessary details. Users can then call the `pay_invoice` function to pay an existing invoice, providing the invoice ID, payment token, nonce, and amount. The function verifies the payment details and transfers the appropriate amounts to the contract owner and the invoice creator. The invoice is cleared from the storage. Users can use the view functions (`getFee`, `getInvoiceId`, `getInvoice`) to retrieve information about the fee, invoice ID, and specific invoices.\n\nOverall, this smart contract provides a simple and efficient way to manage invoices on the MultiversX blockchain." 
 
-###### User Follow-Up Example
-#### Pulsar Inspector Page
+#### Pulsar Inspector 
+
+
+
+
 #### Pulsar TestFlow Page
 
 
