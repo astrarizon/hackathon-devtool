@@ -30,7 +30,7 @@ nativeAuth:
   acceptedOrigins:
     - "utils.multiversx.com"
 chatGpt:
-  apiKey: ""
+  apiKey: "INSERT_GPT_SECRET_KEY_HERE"
 security:
   admins:
 rateLimiterSecret:
